@@ -7,16 +7,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool faceMoveDirection;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float runSpeedMultiplier = 1.5f;
 
     private Animator animator;
 
     private Rigidbody rb;
     private Vector2 moveInput;
     private bool isGrounded;
+    private bool isRunning;
+    private GameUI gameUI;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        gameUI = FindAnyObjectByType<GameUI>();
+
+
     }
 
     void Update()
@@ -35,6 +42,20 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             animator.SetTrigger("Jump");
+        }
+    }
+
+    public void Run(InputAction.CallbackContext context)
+    {
+        if (context.performed) isRunning = true;
+        else if (context.canceled) isRunning = false;
+    }
+
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (context.performed && animator != null)
+        {
+            animator.SetTrigger("Attack");
         }
     }
 
@@ -75,13 +96,32 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Coin"))
+        {
+            Coin coin = collision.gameObject.GetComponent<Coin>();
+
+            if (coin != null)
+            {
+                gameUI.AddScore(coin.GetScoreValue());
+                Destroy(coin.gameObject);
+            }
+        }
+    }
+
+
+
     void UpdateAnimator()
     {
         if (animator == null) return;
 
-        //Convert movement input into a speed value (0 when idle, >0 when moving)
         float currentSpeed = new Vector3(moveInput.x, 0f, moveInput.y).magnitude;
 
+        // Check directly if Left Shift is held
+        bool shiftHeld = Input.GetKey(KeyCode.LeftShift);
+
         animator.SetFloat("Speed", currentSpeed);
+        animator.SetBool("isRunning", shiftHeld);
     }
 }

@@ -1,0 +1,8 @@
+:root {
+}
+
+.Label-style {
+    font-size: 64px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+}
