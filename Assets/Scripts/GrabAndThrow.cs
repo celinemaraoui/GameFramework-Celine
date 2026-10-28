@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +8,13 @@ public class GrabAndThrow : MonoBehaviour
 
     private GameObject nearbyObject;
     private GameObject heldObject;
+    private Animator animator; 
+
+    void Awake()
+    {
+
+        animator = GetComponentInChildren<Animator>();
+    }
 
     public void Interact(InputAction.CallbackContext context)
     {
@@ -29,6 +35,11 @@ public class GrabAndThrow : MonoBehaviour
     {
         if (nearbyObject == null)
             return;
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Grab");
+        }
 
         heldObject = nearbyObject;
         nearbyObject = null;

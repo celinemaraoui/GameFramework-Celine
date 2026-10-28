@@ -2,6 +2,6 @@
     <Style src="project://database/Assets/UI%20Toolkit/UI/GameUIStyleSheet.uss?fileID=7433441132597879392&amp;guid=e21aed17d566ddf4fb654225a44b64c1&amp;type=3#GameUIStyleSheet"/>
     <ui:VisualElement style="flex-grow: 1; position: absolute; width: 1920px; height: 100px; background-color: rgb(255, 219, 253); -unity-background-image-tint-color: rgb(255, 255, 255);">
         <ui:Label text="Label" name="score-text-label" class="Label-style"/>
-        <ui:Label text="Label" name="crops-text-label" class="Label-style" style="position: absolute; left: 1260px;"/>
+        <ui:Label text="Label" name="crops-text-label" class="Label-style" style="position: absolute; left: 915px; right: auto; width: auto; align-items: flex-end; top: 7px;"/>
     </ui:VisualElement>
 </ui:UXML>

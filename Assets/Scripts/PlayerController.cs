@@ -59,6 +59,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Grab(InputAction.CallbackContext context)
+    {
+        if (context.performed && animator != null)
+        {
+            animator.SetTrigger("Grab");
+        }
+    }
+
     void FixedUpdate()
     {
         Vector3 forward = cameraTransform.forward;
@@ -118,7 +126,6 @@ public class PlayerController : MonoBehaviour
 
         float currentSpeed = new Vector3(moveInput.x, 0f, moveInput.y).magnitude;
 
-        // Check directly if Left Shift is held
         bool shiftHeld = Input.GetKey(KeyCode.LeftShift);
 
         animator.SetFloat("Speed", currentSpeed);
